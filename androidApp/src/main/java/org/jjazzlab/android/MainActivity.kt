@@ -63,10 +63,10 @@ class MainActivity : AppCompatActivity() {
 
         startXButton = Button(this).apply {
             layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f).apply { setMargins(4, 4, 4, 4) }
-            text = "Start JJazzLab (Step D)"
+            text = "Start JJazzLab (Optimized)"
             setOnClickListener {
                 startXButton.isEnabled = false
-                appendOutput("Starting Step (D): Xvnc, noVNC, and JJazzLab...\n")
+                appendOutput("Starting JJazzLab with font & Java2D optimizations...\n")
                 executor.execute { startStepD() }
             }
         }
@@ -108,7 +108,7 @@ class MainActivity : AppCompatActivity() {
             setTextColor(0xFF00FF00.toInt())
             textSize = 12f
             typeface = android.graphics.Typeface.MONOSPACE
-            text = "Step (d): Launching JJazzLab Desktop on X Display.\nTap 'Start JJazzLab (Step D)'.\n\n"
+            text = "Optimized JJazzLab Desktop Launch.\nTap 'Start JJazzLab (Optimized)'.\n\n"
         }
 
         webView = WebView(this).apply {
@@ -176,7 +176,7 @@ class MainActivity : AppCompatActivity() {
                 val prepCmd = "DEBIAN_FRONTEND=noninteractive apt-get remove -y --purge novnc || true; " +
                               "rm -rf /opt/novnc /usr/share/novnc; " +
                               "DEBIAN_FRONTEND=noninteractive apt-get update && " +
-                              "DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends tigervnc-standalone-server python3-websockify python3-numpy openbox xterm x11-utils x11-xserver-utils fonts-dejavu fonts-liberation dbus-x11 wget ca-certificates openjdk-21-jdk"
+                              "DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends tigervnc-standalone-server python3-websockify python3-numpy openbox xterm x11-utils x11-xserver-utils fonts-dejavu fonts-liberation dbus-x11 wget ca-certificates openjdk-21-jdk fontconfig"
                 runProotCommand(prepCmd)
 
                 val tarFile = File(cacheDir, "noVNC-1.4.0.tar.gz")
@@ -212,7 +212,10 @@ class MainActivity : AppCompatActivity() {
                 pkill -f websockify || true
                 pkill -f Xvnc || true
 
-                echo "Starting Xvnc at 1280x800 depth 24..." > /root/x.log
+                echo "Refreshing fontconfig cache..." > /root/x.log
+                fc-cache -f >/dev/null 2>&1 || true
+
+                echo "Starting Xvnc at 1280x800 depth 24..." >> /root/x.log
 
                 (
                     while true; do
@@ -226,7 +229,7 @@ class MainActivity : AppCompatActivity() {
 
                 (
                     while true; do
-                        websockify --verbose --web /opt/novnc 6080 127.0.0.1:5901 >> /root/websockify.log 2>&1
+                        websockify --web /opt/novnc 6080 127.0.0.1:5901 >> /root/websockify.log 2>&1
                         echo "websockify exited with ${'$'}?" >> /root/x.log
                         sleep 2
                     done
@@ -236,16 +239,16 @@ class MainActivity : AppCompatActivity() {
                 openbox &
                 sleep 2
 
-                echo "Starting JJazzLab desktop app..." >> /root/x.log
+                echo "Starting JJazzLab desktop app (optimized)..." >> /root/x.log
                 chmod +x /opt/jjazzlab/bin/jjazzlab
                 export PATH=${'$'}PATH:/usr/lib/jvm/java-21-openjdk-amd64/bin
-                /opt/jjazzlab/bin/jjazzlab --jdkhome /usr/lib/jvm/java-21-openjdk-amd64 >> /root/jjazzlab.log 2>&1 &
+                /opt/jjazzlab/bin/jjazzlab --jdkhome /usr/lib/jvm/java-21-openjdk-amd64 -J-Dsun.java2d.opengl=false -J-Dsun.java2d.xrender=false >> /root/jjazzlab.log 2>&1 &
 
                 exec tail -f /dev/null
                 """.trimIndent() + "\n"
             )
 
-            appendOutput("Wrote /root/start-x.sh. Launching background proot daemon...\n")
+            appendOutput("Wrote optimized /root/start-x.sh. Launching background proot daemon...\n")
 
             if (xProcess == null) {
                 val startCmd = "chmod +x /root/start-x.sh && /root/start-x.sh >/root/x.log 2>&1 </dev/null"
@@ -268,16 +271,16 @@ class MainActivity : AppCompatActivity() {
             if (ready) {
                 handler.post {
                     webView.visibility = View.VISIBLE
-                    val targetUrl = "http://127.0.0.1:6080/vnc.html?autoconnect=true&resize=scale&reconnect=true&path=websockify&v=${System.currentTimeMillis()}"
+                    val targetUrl = "http://127.0.0.1:6080/vnc.html?autoconnect=true&resize=scale&quality=9&compression=0&path=websockify&v=${System.currentTimeMillis()}"
                     webView.loadUrl(targetUrl)
-                    appendOutput("\nLoaded JJazzLab noVNC URL in WebView:\n$targetUrl\n")
+                    appendOutput("\nLoaded optimized JJazzLab noVNC URL in WebView:\n$targetUrl\n")
                 }
             } else {
                 appendOutput("Timeout waiting for HTTP 200 + RFB banner.\n")
             }
 
         } catch (e: Exception) {
-            appendOutput("Start Step D Error: ${e.message}\n")
+            appendOutput("Start Optimized Step D Error: ${e.message}\n")
         } finally {
             handler.post { startXButton.isEnabled = true }
         }
