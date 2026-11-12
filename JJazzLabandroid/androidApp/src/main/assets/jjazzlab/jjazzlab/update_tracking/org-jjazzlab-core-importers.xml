@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?><module codename="org.jjazzlab.core.importers">
+    <module_version install_time="1794429369960" last="true" origin="installer" specification_version="5.2.1">
+        <file crc="1132174493" name="config/Modules/org-jjazzlab-core-importers.xml"/>
+        <file crc="3959464191" name="modules/ext/org.jjazzlab.core.importers/xalan/serializer.jar"/>
+        <file crc="2356488793" name="modules/ext/org.jjazzlab.core.importers/xalan/xalan.jar"/>
+        <file crc="674624388" name="modules/ext/org.jjazzlab.core.importers/xerces/xercesImpl.jar"/>
+        <file crc="2706825387" name="modules/ext/org.jjazzlab.core.importers/xml-apis/xml-apis.jar"/>
+        <file crc="2685172241" name="modules/ext/org.jjazzlab.core.importers/xom/xom.jar"/>
+        <file crc="1602422207" name="modules/org-jjazzlab-core-importers.jar"/>
+    </module_version>
+</module>

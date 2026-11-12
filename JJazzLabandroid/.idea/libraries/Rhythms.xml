@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Rhythms">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/app/RhythmDatabaseImpl/src/main/resources/org/jjazz/rhythmdatabaseimpl/resources/Rhythms.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

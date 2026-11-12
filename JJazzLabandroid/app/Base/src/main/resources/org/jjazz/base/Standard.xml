@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!--
+
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+    KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+
+-->
+
+<!DOCTYPE Configuration PUBLIC "-//NetBeans IDE//DTD toolbar//EN" "http://www.netbeans.org/dtds/toolbar.dtd">
+<!-- This file is referenced by layer.xml --> 
+<!-- https://netbeans.apache.org/wiki/main/netbeansdevelopperfaq/DevFaqHideShowToolbar/ -->
+<!-- https://anchialas.wordpress.com/2010/08/19/custom-toolbar-configuration/ -->
+<!-- https://github.com/apache/netbeans/blob/master/platform/core.ui/src/org/netbeans/core/ui/resources/layer.xml -->
+<Configuration>
+    <Row>
+        <Toolbar name="File" position="100" />
+        <Toolbar name="UndoRedo" position="200" />
+        <Toolbar name="Clipboard" visible="false" />
+        <Toolbar name="ControlToolbar" position="400" />      
+        <Toolbar name="AutoPreviewToolbar" position="450" />      
+        <Toolbar name="Memory" visible="false" />
+    </Row> 
+
+</Configuration>

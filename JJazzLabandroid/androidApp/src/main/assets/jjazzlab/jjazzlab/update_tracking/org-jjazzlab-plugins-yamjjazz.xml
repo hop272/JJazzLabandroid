@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?><module codename="org.jjazzlab.plugins.yamjjazz">
+    <module_version install_time="1794429370313" last="true" origin="installer" specification_version="5.2.1">
+        <file crc="2024712911" name="config/Modules/org-jjazzlab-plugins-yamjjazz.xml"/>
+        <file crc="2180866617" name="modules/org-jjazzlab-plugins-yamjjazz.jar"/>
+    </module_version>
+</module>

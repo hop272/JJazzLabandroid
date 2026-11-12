@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?><module codename="org.jjazzlab.core.guava">
+    <module_version install_time="1794429369920" last="true" origin="installer" specification_version="5.2.1">
+        <file crc="3644676988" name="config/Modules/org-jjazzlab-core-guava.xml"/>
+        <file crc="541077999" name="modules/ext/org.jjazzlab.core.guava/com-google-code-findbugs/jsr305.jar"/>
+        <file crc="2867847587" name="modules/ext/org.jjazzlab.core.guava/com-google-errorprone/error_prone_annotations.jar"/>
+        <file crc="379178504" name="modules/ext/org.jjazzlab.core.guava/com-google-guava/failureaccess.jar"/>
+        <file crc="1244179174" name="modules/ext/org.jjazzlab.core.guava/com-google-guava/guava.jar"/>
+        <file crc="4084025488" name="modules/ext/org.jjazzlab.core.guava/com-google-guava/listenablefuture.jar"/>
+        <file crc="3912299270" name="modules/ext/org.jjazzlab.core.guava/com-google-j2objc/j2objc-annotations.jar"/>
+        <file crc="1779913808" name="modules/ext/org.jjazzlab.core.guava/org-checkerframework/checker-qual.jar"/>
+        <file crc="947849137" name="modules/org-jjazzlab-core-guava.jar"/>
+    </module_version>
+</module>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/app/ActiveSong/ActiveSong.iml" filepath="$PROJECT_DIR$/app/ActiveSong/ActiveSong.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/Analytics/Analytics.iml" filepath="$PROJECT_DIR$/app/Analytics/Analytics.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/Arranger/Arranger.iml" filepath="$PROJECT_DIR$/app/Arranger/Arranger.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/Base/Base.iml" filepath="$PROJECT_DIR$/app/Base/Base.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/CL_Editor/CL_Editor.iml" filepath="$PROJECT_DIR$/app/CL_Editor/CL_Editor.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/CL_EditorImpl/CL_EditorImpl.iml" filepath="$PROJECT_DIR$/app/CL_EditorImpl/CL_EditorImpl.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/ChordInspector/ChordInspector.iml" filepath="$PROJECT_DIR$/app/ChordInspector/ChordInspector.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/CoreUIcomponents/CoreUIcomponents.iml" filepath="$PROJECT_DIR$/app/CoreUIcomponents/CoreUIcomponents.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/EasyReader/EasyReader.iml" filepath="$PROJECT_DIR$/app/EasyReader/EasyReader.iml" />
+      <module fileurl="file://$PROJECT_DIR$/core/EmbeddedSynth/EmbeddedSynth.iml" filepath="$PROJECT_DIR$/core/EmbeddedSynth/EmbeddedSynth.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/FileDirectoryManager/FileDirectoryManager.iml" filepath="$PROJECT_DIR$/app/FileDirectoryManager/FileDirectoryManager.iml" />
+      <module fileurl="file://$PROJECT_DIR$/core/FlatComponents/FlatComponents.iml" filepath="$PROJECT_DIR$/core/FlatComponents/FlatComponents.iml" />
+      <module fileurl="file://$PROJECT_DIR$/plugins/FluidSynthEmbeddedSynth/FluidSynthEmbeddedSynth.iml" filepath="$PROJECT_DIR$/plugins/FluidSynthEmbeddedSynth/FluidSynthEmbeddedSynth.iml" />
+      <module fileurl="file://$PROJECT_DIR$/core/Humanizer/Humanizer.iml" filepath="$PROJECT_DIR$/core/Humanizer/Humanizer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/core/Importers/Importers.iml" filepath="$PROJECT_DIR$/core/Importers/Importers.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/ImprovisationSupport/ImprovisationSupport.iml" filepath="$PROJECT_DIR$/app/ImprovisationSupport/ImprovisationSupport.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/InstrumentChooser/InstrumentChooser.iml" filepath="$PROJECT_DIR$/app/InstrumentChooser/InstrumentChooser.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/InstrumentComponents/InstrumentComponents.iml" filepath="$PROJECT_DIR$/app/InstrumentComponents/InstrumentComponents.iml" />
+      <module fileurl="file://$PROJECT_DIR$/plugins/JJSwing/JJSwing.iml" filepath="$PROJECT_DIR$/plugins/JJSwing/JJSwing.iml" />
+      <module fileurl="file://$PROJECT_DIR$/model/Midi/Midi.iml" filepath="$PROJECT_DIR$/model/Midi/Midi.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/MixConsole/MixConsole.iml" filepath="$PROJECT_DIR$/app/MixConsole/MixConsole.iml" />
+      <module fileurl="file://$PROJECT_DIR$/core/MusicControl/MusicControl.iml" filepath="$PROJECT_DIR$/core/MusicControl/MusicControl.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/MusicControlActions/MusicControlActions.iml" filepath="$PROJECT_DIR$/app/MusicControlActions/MusicControlActions.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/Options/Options.iml" filepath="$PROJECT_DIR$/app/Options/Options.iml" />
+      <module fileurl="file://$PROJECT_DIR$/core/OutputSynth/OutputSynth.iml" filepath="$PROJECT_DIR$/core/OutputSynth/OutputSynth.iml" />
+      <module fileurl="file://$PROJECT_DIR$/core/PhraseTransform/PhraseTransform.iml" filepath="$PROJECT_DIR$/core/PhraseTransform/PhraseTransform.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/PianoRoll/PianoRoll.iml" filepath="$PROJECT_DIR$/app/PianoRoll/PianoRoll.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/Print/Print.iml" filepath="$PROJECT_DIR$/app/Print/Print.iml" />
+      <module fileurl="file://$PROJECT_DIR$/core/Quantizer/Quantizer.iml" filepath="$PROJECT_DIR$/core/Quantizer/Quantizer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/model/Rhythm/Rhythm.iml" filepath="$PROJECT_DIR$/model/Rhythm/Rhythm.iml" />
+      <module fileurl="file://$PROJECT_DIR$/core/RhythmDatabase/RhythmDatabase.iml" filepath="$PROJECT_DIR$/core/RhythmDatabase/RhythmDatabase.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/RhythmDatabaseImpl/RhythmDatabaseImpl.iml" filepath="$PROJECT_DIR$/app/RhythmDatabaseImpl/RhythmDatabaseImpl.iml" />
+      <module fileurl="file://$PROJECT_DIR$/core/RhythmMusicGeneration/RhythmMusicGeneration.iml" filepath="$PROJECT_DIR$/core/RhythmMusicGeneration/RhythmMusicGeneration.iml" />
+      <module fileurl="file://$PROJECT_DIR$/core/RhythmMusicGenerationSPI/RhythmMusicGenerationSPI.iml" filepath="$PROJECT_DIR$/core/RhythmMusicGenerationSPI/RhythmMusicGenerationSPI.iml" />
+      <module fileurl="file://$PROJECT_DIR$/core/RhythmParametersImpl/RhythmParametersImpl.iml" filepath="$PROJECT_DIR$/core/RhythmParametersImpl/RhythmParametersImpl.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/RhythmSelectionDialog/RhythmSelectionDialog.iml" filepath="$PROJECT_DIR$/app/RhythmSelectionDialog/RhythmSelectionDialog.iml" />
+      <module fileurl="file://$PROJECT_DIR$/core/RhythmStubs/RhythmStubs.iml" filepath="$PROJECT_DIR$/core/RhythmStubs/RhythmStubs.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/RpCustomEditorFactoryImpl/RpCustomEditorFactoryImpl.iml" filepath="$PROJECT_DIR$/app/RpCustomEditorFactoryImpl/RpCustomEditorFactoryImpl.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/SS_Editor/SS_Editor.iml" filepath="$PROJECT_DIR$/app/SS_Editor/SS_Editor.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/SS_EditorImpl/SS_EditorImpl.iml" filepath="$PROJECT_DIR$/app/SS_EditorImpl/SS_EditorImpl.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/Score/Score.iml" filepath="$PROJECT_DIR$/app/Score/Score.iml" />
+      <module fileurl="file://$PROJECT_DIR$/model/Song/Song.iml" filepath="$PROJECT_DIR$/model/Song/Song.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/SongEditorManager/SongEditorManager.iml" filepath="$PROJECT_DIR$/app/SongEditorManager/SongEditorManager.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/SongMemoViewer/SongMemoViewer.iml" filepath="$PROJECT_DIR$/app/SongMemoViewer/SongMemoViewer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/SptEditor/SptEditor.iml" filepath="$PROJECT_DIR$/app/SptEditor/SptEditor.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/StartupManager/StartupManager.iml" filepath="$PROJECT_DIR$/app/StartupManager/StartupManager.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/Test/Test.iml" filepath="$PROJECT_DIR$/app/Test/Test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/core/TestMocks/TestMocks.iml" filepath="$PROJECT_DIR$/core/TestMocks/TestMocks.iml" />
+      <module fileurl="file://$PROJECT_DIR$/core/TestPlayerService/TestPlayerService.iml" filepath="$PROJECT_DIR$/core/TestPlayerService/TestPlayerService.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/UISettings/UISettings.iml" filepath="$PROJECT_DIR$/app/UISettings/UISettings.iml" />
+      <module fileurl="file://$PROJECT_DIR$/core/UIUtilities/UIUtilities.iml" filepath="$PROJECT_DIR$/core/UIUtilities/UIUtilities.iml" />
+      <module fileurl="file://$PROJECT_DIR$/core/UndoManager/UndoManager.iml" filepath="$PROJECT_DIR$/core/UndoManager/UndoManager.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/Upgrade/Upgrade.iml" filepath="$PROJECT_DIR$/app/Upgrade/Upgrade.iml" />
+      <module fileurl="file://$PROJECT_DIR$/core/Xstream/Xstream.iml" filepath="$PROJECT_DIR$/core/Xstream/Xstream.iml" />
+      <module fileurl="file://$PROJECT_DIR$/plugins/YamJJazz/YamJJazz.iml" filepath="$PROJECT_DIR$/plugins/YamJJazz/YamJJazz.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/YjzCreationWizard/YjzCreationWizard.iml" filepath="$PROJECT_DIR$/app/YjzCreationWizard/YjzCreationWizard.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/ZoomableSliders/ZoomableSliders.iml" filepath="$PROJECT_DIR$/app/ZoomableSliders/ZoomableSliders.iml" />
+      <module fileurl="file://$PROJECT_DIR$/core/Utilities/src/main/main.iml" filepath="$PROJECT_DIR$/core/Utilities/src/main/main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/model/Phrase/src/main/main2.iml" filepath="$PROJECT_DIR$/model/Phrase/src/main/main2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/model/Harmony/src/main/main3.iml" filepath="$PROJECT_DIR$/model/Harmony/src/main/main3.iml" />
+      <module fileurl="file://$PROJECT_DIR$/model/SongImpl/src/main/main4.iml" filepath="$PROJECT_DIR$/model/SongImpl/src/main/main4.iml" />
+      <module fileurl="file://$PROJECT_DIR$/model/Harmony/src/test/test2.iml" filepath="$PROJECT_DIR$/model/Harmony/src/test/test2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/model/SongImpl/src/test/test3.iml" filepath="$PROJECT_DIR$/model/SongImpl/src/test/test3.iml" />
+      <module fileurl="file://$PROJECT_DIR$/model/Phrase/src/test/test4.iml" filepath="$PROJECT_DIR$/model/Phrase/src/test/test4.iml" />
+    </modules>
+  </component>
+</project>

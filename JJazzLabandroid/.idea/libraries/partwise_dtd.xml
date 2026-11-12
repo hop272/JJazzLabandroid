@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="partwise-dtd">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/core/Importers/src/main/resources/org/jjazz/importers/musicxml/resources/partwise-dtd.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

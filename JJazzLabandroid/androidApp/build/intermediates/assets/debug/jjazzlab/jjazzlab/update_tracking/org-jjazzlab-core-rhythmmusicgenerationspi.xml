@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?><module codename="org.jjazzlab.core.rhythmmusicgenerationspi">
+    <module_version install_time="1794429369767" last="true" origin="installer" specification_version="5.2.1">
+        <file crc="2711260695" name="config/Modules/org-jjazzlab-core-rhythmmusicgenerationspi.xml"/>
+        <file crc="2300959598" name="modules/org-jjazzlab-core-rhythmmusicgenerationspi.jar"/>
+    </module_version>
+</module>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?><module codename="org.jjazzlab.core.testplayerservice">
+    <module_version install_time="1794429369718" last="true" origin="installer" specification_version="5.2.1">
+        <file crc="3240006376" name="config/Modules/org-jjazzlab-core-testplayerservice.xml"/>
+        <file crc="1261972822" name="modules/org-jjazzlab-core-testplayerservice.jar"/>
+    </module_version>
+</module>

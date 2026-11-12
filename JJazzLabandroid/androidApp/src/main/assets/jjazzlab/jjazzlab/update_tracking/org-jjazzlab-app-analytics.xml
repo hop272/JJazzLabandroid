@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?><module codename="org.jjazzlab.app.analytics">
+    <module_version install_time="1794429370294" last="true" origin="installer" specification_version="5.2.1">
+        <file crc="2493104152" name="config/Modules/org-jjazzlab-app-analytics.xml"/>
+        <file crc="873594839" name="modules/ext/org.jjazzlab.app.analytics/com-mixpanel/mixpanel-java.jar"/>
+        <file crc="2207914986" name="modules/ext/org.jjazzlab.app.analytics/org-json/json.jar"/>
+        <file crc="2347495464" name="modules/org-jjazzlab-app-analytics.jar"/>
+    </module_version>
+</module>

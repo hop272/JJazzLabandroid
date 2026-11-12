@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?><module codename="org.jjazzlab.plugins.fluidsynthembeddedsynth">
+    <module_version install_time="1794429370335" last="true" origin="installer" specification_version="5.2.1">
+        <file crc="3654754096" name="config/Modules/org-jjazzlab-plugins-fluidsynthembeddedsynth.xml"/>
+        <file crc="541077999" name="modules/ext/org.jjazzlab.plugins.fluidsynthembeddedsynth/com-google-code-findbugs/jsr305.jar"/>
+        <file crc="2867847587" name="modules/ext/org.jjazzlab.plugins.fluidsynthembeddedsynth/com-google-errorprone/error_prone_annotations.jar"/>
+        <file crc="379178504" name="modules/ext/org.jjazzlab.plugins.fluidsynthembeddedsynth/com-google-guava/failureaccess.jar"/>
+        <file crc="1244179174" name="modules/ext/org.jjazzlab.plugins.fluidsynthembeddedsynth/com-google-guava/guava.jar"/>
+        <file crc="4084025488" name="modules/ext/org.jjazzlab.plugins.fluidsynthembeddedsynth/com-google-guava/listenablefuture.jar"/>
+        <file crc="3912299270" name="modules/ext/org.jjazzlab.plugins.fluidsynthembeddedsynth/com-google-j2objc/j2objc-annotations.jar"/>
+        <file crc="1779913808" name="modules/ext/org.jjazzlab.plugins.fluidsynthembeddedsynth/org-checkerframework/checker-qual.jar"/>
+        <file crc="3925012451" name="modules/ext/org.jjazzlab.plugins.fluidsynthembeddedsynth/org-jjazzlab/fluidsynthjava.jar"/>
+        <file crc="1402470824" name="modules/org-jjazzlab-plugins-fluidsynthembeddedsynth.jar"/>
+    </module_version>
+</module>

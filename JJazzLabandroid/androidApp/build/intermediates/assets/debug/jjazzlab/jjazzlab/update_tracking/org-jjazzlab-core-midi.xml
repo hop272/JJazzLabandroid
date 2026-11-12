@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?><module codename="org.jjazzlab.core.midi">
+    <module_version install_time="1794429369779" last="true" origin="installer" specification_version="5.2.1">
+        <file crc="2540088890" name="config/Modules/org-jjazzlab-core-midi.xml"/>
+        <file crc="3078695317" name="modules/org-jjazzlab-core-midi.jar"/>
+    </module_version>
+</module>

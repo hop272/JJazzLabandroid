@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?><module codename="org.jjazzlab.core.phrase">
+    <module_version install_time="1794429369696" last="true" origin="installer" specification_version="5.2.1">
+        <file crc="845604843" name="config/Modules/org-jjazzlab-core-phrase.xml"/>
+        <file crc="2477957844" name="modules/org-jjazzlab-core-phrase.jar"/>
+    </module_version>
+</module>

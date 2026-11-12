@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?><module codename="org.jjazzlab.core.phrasetransform">
+    <module_version install_time="1794429369693" last="true" origin="installer" specification_version="5.2.1">
+        <file crc="152983483" name="config/Modules/org-jjazzlab-core-phrasetransform.xml"/>
+        <file crc="1458677723" name="modules/org-jjazzlab-core-phrasetransform.jar"/>
+    </module_version>
+</module>

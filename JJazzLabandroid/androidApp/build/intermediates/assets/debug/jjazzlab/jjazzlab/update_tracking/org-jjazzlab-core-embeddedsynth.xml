@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?><module codename="org.jjazzlab.core.embeddedsynth">
+    <module_version install_time="1794429369680" last="true" origin="installer" specification_version="5.2.1">
+        <file crc="2507159728" name="config/Modules/org-jjazzlab-core-embeddedsynth.xml"/>
+        <file crc="4181422398" name="modules/org-jjazzlab-core-embeddedsynth.jar"/>
+    </module_version>
+</module>

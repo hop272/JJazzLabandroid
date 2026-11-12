@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?><module codename="org.jjazzlab.core.undomanager">
+    <module_version install_time="1794429369891" last="true" origin="installer" specification_version="5.2.1">
+        <file crc="2951373754" name="config/Modules/org-jjazzlab-core-undomanager.xml"/>
+        <file crc="2046659992" name="modules/org-jjazzlab-core-undomanager.jar"/>
+    </module_version>
+</module>

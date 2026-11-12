@@ -1,0 +1,159 @@
+/*
+ *  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
+ * 
+ *  Copyright @2019 Jerome Lelasseux. All rights reserved.
+ *
+ *  This file is part of the JJazzLab software.
+ *   
+ *  JJazzLab is free software: you can redistribute it and/or modify
+ *  it under the terms of the Lesser GNU General Public License (LGPLv3) 
+ *  as published by the Free Software Foundation, either version 3 of the License, 
+ *  or (at your option) any later version.
+ *
+ *  JJazzLab is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Lesser General Public License for more details.
+ * 
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with JJazzLab.  If not, see <https://www.gnu.org/licenses/>
+ * 
+ *  Contributor(s): 
+ */
+package org.jjazz.cl_editorimpl.actions;
+
+import java.awt.event.ActionEvent;
+import java.util.EnumSet;
+import java.util.logging.Logger;
+import static javax.swing.Action.NAME;
+import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JMenuItem;
+import org.jjazz.chordleadsheet.api.ChordLeadSheet;
+import org.jjazz.chordleadsheet.api.event.ClsChangeEvent;
+import org.jjazz.chordleadsheet.api.event.ItemChangedEvent;
+import org.jjazz.chordleadsheet.api.item.CLI_ChordSymbol;
+import org.jjazz.chordleadsheet.api.item.ChordRenderingInfo;
+import org.jjazz.chordleadsheet.api.item.ChordRenderingInfo.Feature;
+import org.jjazz.chordleadsheet.api.item.ExtChordSymbol;
+import org.jjazz.cl_editor.api.CL_ContextAction;
+import org.jjazz.cl_editor.api.CL_Selection;
+import org.jjazz.undomanager.api.JJazzUndoManagerFinder;
+import org.jjazz.utilities.api.ResUtil;
+import org.openide.awt.ActionID;
+import org.openide.awt.ActionReference;
+import org.openide.awt.ActionReferences;
+import org.openide.awt.ActionRegistration;
+import org.openide.util.actions.Presenter;
+
+/**
+ * Bass pedal option
+ * <p>
+ * Action is actually performed via a checkbox menu item (see Presenter.Popup).
+ */
+@ActionID(category = "JJazz", id = "org.jjazz.cl_editor.actions.interpretation.basspedal")
+@ActionRegistration(displayName = "not_used", lazy = false)
+@ActionReferences(
+        {
+            @ActionReference(path = "Actions/ChordSymbolInterpretation", position = 1000, separatorBefore = 999)
+        })
+public final class InterpretationBassPedal extends CL_ContextAction implements Presenter.Popup
+{
+
+    private JCheckBoxMenuItem cbMenuItem;
+    private static final Logger LOGGER = Logger.getLogger(InterpretationBassPedal.class.getSimpleName());
+
+    @Override
+    protected void configureAction()
+    {
+        putValue(NAME, ResUtil.getString(getClass(), "CTL_InterpretationBassPedal"));
+        putValue(LISTENING_TARGETS, EnumSet.of(ListeningTarget.CLS_ITEMS_SELECTION, ListeningTarget.ACTIVE_CLS_CHANGES));        
+    }
+
+    @Override
+    protected void actionPerformed(ActionEvent ae, ChordLeadSheet cls, CL_Selection selection)
+    {
+        // Not used
+    }
+
+    @Override
+    public void selectionChange(CL_Selection selection)
+    {
+        setEnabled(selection.isChordSymbolSelected());
+        updateMenuItem(selection);
+    }
+
+    @Override
+    public void chordLeadSheetChanged(ClsChangeEvent event)
+    {
+        var selection = getSelection();
+        if (event instanceof ItemChangedEvent && selection.getSelectedItems().contains(event.getItem()))
+        {
+            updateMenuItem(selection);
+        }
+    }
+
+    // ============================================================================================= 
+    // Presenter.Popup
+    // =============================================================================================   
+    @Override
+    public JMenuItem getPopupPresenter()
+    {
+        if (cbMenuItem == null)
+        {
+            cbMenuItem = new JCheckBoxMenuItem(getActionName());
+            cbMenuItem.addActionListener(evt -> 
+            {
+                setBassPedal(cbMenuItem.isSelected());
+            });
+            cbMenuItem.putClientProperty("CheckBoxMenuItem.doNotCloseOnMouseClick", true);
+        }
+
+        updateMenuItem(getSelection());
+
+        return cbMenuItem;
+    }
+
+    private void setBassPedal(boolean b)
+    {
+        ChordLeadSheet cls = getActiveChordLeadSheet();
+
+
+        JJazzUndoManagerFinder.getDefault().get(cls).startCEdit(getActionName());
+
+
+        for (CLI_ChordSymbol item : getSelection().getSelectedChordSymbols())
+        {
+            ExtChordSymbol ecs = item.getData();
+            ChordRenderingInfo cri = ecs.getRenderingInfo();
+            var features = cri.getFeatures();
+            if (b)
+            {
+                features.add(Feature.PEDAL_BASS);
+            } else
+            {
+                features.remove(Feature.PEDAL_BASS);
+            }
+            ChordRenderingInfo newCri = new ChordRenderingInfo(cri, features);
+            ExtChordSymbol newCs = ecs.getCopy(null, newCri, ecs.getAlternateChordSymbol(), ecs.getAlternateFilter());
+            item.getContainer().changeItem(item, newCs);
+        }
+
+        JJazzUndoManagerFinder.getDefault().get(cls).endCEdit(getActionName());
+    }
+
+    private void updateMenuItem(CL_Selection selection)
+    {
+        if (cbMenuItem == null)
+        {
+            return;
+        }
+
+        // Update the checkbox: select if only all chord symbols use bass pedal
+        boolean b = selection.getSelectedChordSymbols().stream()
+                .map(cliCs -> cliCs.getData().getRenderingInfo())
+                .allMatch(cri -> cri.hasOneFeature(Feature.PEDAL_BASS));
+        cbMenuItem.setSelected(b);
+        cbMenuItem.setEnabled(isEnabled());
+    }
+
+}

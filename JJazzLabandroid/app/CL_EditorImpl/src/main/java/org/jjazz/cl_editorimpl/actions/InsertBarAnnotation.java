@@ -1,0 +1,99 @@
+/*
+ *  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
+ * 
+ *  Copyright @2019 Jerome Lelasseux. All rights reserved.
+ *
+ *  This file is part of the JJazzLab software.
+ *   
+ *  JJazzLab is free software: you can redistribute it and/or modify
+ *  it under the terms of the Lesser GNU General Public License (LGPLv3) 
+ *  as published by the Free Software Foundation, either version 3 of the License, 
+ *  or (at your option) any later version.
+ *
+ *  JJazzLab is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Lesser General Public License for more details.
+ * 
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with JJazzLab.  If not, see <https://www.gnu.org/licenses/>
+ * 
+ *  Contributor(s): 
+ */
+package org.jjazz.cl_editorimpl.actions;
+
+import java.awt.event.ActionEvent;
+import java.util.EnumSet;
+import java.util.logging.Logger;
+import static javax.swing.Action.ACCELERATOR_KEY;
+import static javax.swing.Action.NAME;
+import javax.swing.KeyStroke;
+import org.jjazz.chordleadsheet.api.ChordLeadSheet;
+import org.jjazz.chordleadsheet.api.event.ClsChangeEvent;
+import org.jjazz.chordleadsheet.api.event.DeletedBarsEvent;
+import org.jjazz.chordleadsheet.api.event.InsertedBarsEvent;
+import org.jjazz.cl_editor.api.CL_ContextAction;
+import static org.jjazz.cl_editor.api.CL_ContextAction.LISTENING_TARGETS;
+import org.jjazz.cl_editor.spi.Preset;
+import org.jjazz.cl_editor.api.CL_EditorTopComponent;
+import org.jjazz.cl_editor.api.CL_Editor;
+import org.jjazz.cl_editor.api.CL_Selection;
+import org.jjazz.cl_editor.spi.Preset.Type;
+import org.jjazz.utilities.api.ResUtil;
+import org.openide.awt.ActionID;
+import org.openide.awt.ActionReference;
+import org.openide.awt.ActionReferences;
+import org.openide.awt.ActionRegistration;
+
+/**
+ * Insert a bar annotation at the first selected bar.
+ * <p>
+ */
+@ActionID(category = "JJazz", id = "org.jjazz.cl_editor.actions.insertbarannotation")
+@ActionRegistration(displayName = "not_used", lazy = false)
+@ActionReferences(
+        {
+            @ActionReference(path = "Actions/BarInsert", position = 120),
+            @ActionReference(path = "Shortcuts", name="O-L")
+        })
+public class InsertBarAnnotation extends CL_ContextAction
+{
+
+    public static final KeyStroke KEYSTROKE = KeyStroke.getKeyStroke("alt L");
+    private static final Logger LOGGER = Logger.getLogger(InsertBarAnnotation.class.getSimpleName());
+
+   @Override
+    protected void configureAction()
+    {
+        putValue(NAME, ResUtil.getString(getClass(), "CTL_InsertBarAnnotation"));
+        putValue(ACCELERATOR_KEY, KEYSTROKE);
+        putValue(LISTENING_TARGETS, EnumSet.of(CL_ContextAction.ListeningTarget.BAR_SELECTION, CL_ContextAction.ListeningTarget.ACTIVE_CLS_CHANGES));        
+    }
+
+     @Override
+    protected void actionPerformed(ActionEvent ae, ChordLeadSheet cls, CL_Selection selection)
+    {
+        CL_Editor editor = CL_EditorTopComponent.get(cls).getEditor();
+        int barIndex = selection.getMinBarIndexWithinCls();
+        Preset preset = new Preset(Type.AnnotationEdit, null, (char) 0);
+        Edit.editBarWithDialog(editor, barIndex, preset, cls, getActionName());
+    }
+
+    @Override
+    public void selectionChange(CL_Selection selection)
+    {
+        boolean b = selection.getSelectedBarIndexesWithinCls().size() == 1;
+        setEnabled(b);
+    }
+
+
+    @Override
+    public void chordLeadSheetChanged(ClsChangeEvent event)
+    {
+        if (event instanceof InsertedBarsEvent || event instanceof DeletedBarsEvent)
+        {
+            selectionChange(getSelection());
+        }
+    }
+
+}

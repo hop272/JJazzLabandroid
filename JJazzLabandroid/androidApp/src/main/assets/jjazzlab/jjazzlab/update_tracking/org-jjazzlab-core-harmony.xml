@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?><module codename="org.jjazzlab.core.harmony">
+    <module_version install_time="1794429369771" last="true" origin="installer" specification_version="5.2.1">
+        <file crc="2132998496" name="config/Modules/org-jjazzlab-core-harmony.xml"/>
+        <file crc="2415363334" name="modules/org-jjazzlab-core-harmony.jar"/>
+    </module_version>
+</module>

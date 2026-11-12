@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.jjazzlab</groupId>
+    <artifactId>jjazzlab-parent</artifactId>
+    <version>5.2.1</version>
+    <packaging>pom</packaging>
+    <name>JJazzLab Parent</name>
+    
+    <!-- project meta-data  -->
+    <url>https://github.com/jjazzboss/JJazzLab</url>
+    <description>JJazzLab parent project</description>
+    <organization>
+        <url>https://www.jjazzlab.org</url>
+    </organization>   
+    <licenses>
+        <license>
+            <name>GNU LESSER GENERAL PUBLIC LICENSE Version 2.1</name>
+            <url>https://www.gnu.org/licenses/lgpl-2.1.en.html#license-text</url>
+        </license>
+    </licenses>      
+    <developers>
+        <developer>
+            <id>jlelasseux</id>
+            <name>Jerome Lelasseux</name>
+            <roles>
+                <role>architect</role>
+                <role>developer</role>
+            </roles>
+            <organization>JJazzLab</organization>
+            <organizationUrl>https://www.jjazzlab.org</organizationUrl>            
+            <email>jl@jjazzlab.org</email>
+            <timezone>Europe/Paris</timezone>
+        </developer>
+    </developers>    
+    <scm>
+        <connection>scm:git:git://github.com/jjazzboss/JJazzLab.git</connection>
+        <developerConnection>scm:git:git@github.com:jjazzboss/JJazzLab.git</developerConnection>
+        <url>https://github.com/jjazzboss/JJazzLab</url>
+    </scm>          
+    
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>         
+        <netbeans.version>RELEASE290</netbeans.version>
+        <brandingToken>jjazzlab</brandingToken> <!-- used for nbm:cluster-app configuration -->        
+        <jjazzlab.maven.compiler.plugin.version>3.13.0</jjazzlab.maven.compiler.plugin.version>
+        <jjazzlab.compiler.release>25</jjazzlab.compiler.release>
+        <jjazzlab.javac.fork>false</jjazzlab.javac.fork>
+        <jjazzlab.javac.showDeprecation>true</jjazzlab.javac.showDeprecation>
+        <jjazzlab.javac.showWarnings>true</jjazzlab.javac.showWarnings>
+        <jjazzlab.javac.xlint></jjazzlab.javac.xlint>   
+        <jjazzlab.surefire.skipTests>false</jjazzlab.surefire.skipTests>
+    </properties>
+    
+    
+    <build>
+        <pluginManagement>
+            <!-- 
+            General plugins configuration for current and children POM. 
+            Note that some plugins might need to be also referenced in the build/plugins section to be part of the build. 
+            -->
+            <plugins>
+                                
+                <plugin>
+                    <groupId>org.apache.netbeans.utilities</groupId>
+                    <artifactId>nbm-maven-plugin</artifactId>
+                    <version>14.4</version>
+                    <extensions>true</extensions>
+                    <configuration>
+                        <brandingToken>${brandingToken}</brandingToken>         <!-- for nbm:cluster-app, nbm:branding, nbm:run-platform, nbm:standalone-zip -->
+                        <cluster>${brandingToken}</cluster>                     <!-- for nbm:branding, nbm:nbm -->
+                        <verifyRuntime>fail</verifyRuntime>-->                  <!-- behavior if nbm:manifest detects an inconsistency between module API usage and maven dependencies. -->
+                    </configuration>
+                    <executions>
+                        <!-- Disable default-branding by default (branding module re-enables it) -->
+                        <execution>
+                            <id>default-branding</id>
+                            <phase>none</phase>
+                        </execution>                                                                                                   
+                    </executions>                      
+                </plugin>
+                
+                <!-- Jar plugin, required for NBM -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>3.4.2</version>                         
+                    <configuration>
+                        <archive>
+                            <!-- required since nbm-maven-plugin 3.0-->
+                            <manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
+                        </archive>
+                    </configuration>
+                </plugin>                
+                
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${jjazzlab.maven.compiler.plugin.version}</version>
+                    <configuration>
+                        <release>${jjazzlab.compiler.release}</release>
+                        <!-- proc=full REQUIRED from JDK 23 https://github.com/apache/netbeans-mavenutils-nbm-maven-plugin/issues/201. Otherwise nbm builds an app with no JJazzLab modules -->
+                        <proc>full</proc>         
+                        <showDeprecation>${jjazzlab.javac.showDeprecation}</showDeprecation>
+                        <showWarnings>${jjazzlab.javac.showWarnings}</showWarnings>
+                        <useIncrementalCompilation>false</useIncrementalCompilation>    <!--  see https://stackoverflow.com/questions/76349126/building-parent-project-always-recompiles-all-modules -->
+                        <!-- fork must be true to pass -J arguments to the compiler -->                                                
+                        <fork>${jjazzlab.javac.fork}</fork>
+                        <compilerArgs>
+                            <arg>${jjazzlab.javac.xlint}</arg>
+                        </compilerArgs>
+                    </configuration>
+                </plugin>                                                                  
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <version>3.12.0</version>
+                    <configuration>
+                        <release>${jjazzlab.compiler.release}</release>
+                        <failOnError>false</failOnError>
+                        <sourceFileIncludes>
+                            <include>org/jjazz/**/api/**/*.java</include>
+                            <include>org/jjazz/**/spi/**/*.java</include>
+                        </sourceFileIncludes>                                                        
+                        <show>public</show>
+                        <nohelp>false</nohelp>
+                        <detectLinks>false</detectLinks>
+                        <detectOfflineLinks>true</detectOfflineLinks>   
+                        <quiet>false</quiet>
+                        <doclint>none</doclint>
+                        <doctitle>JJazzLab ${project.version} API Index</doctitle>                        
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>aggregate</id>
+                            <goals>
+                                <goal>aggregate</goal>
+                            </goals>
+                            <!--<phase>site</phase>-->
+                            <configuration>
+                                <!-- Specific configuration for the aggregate report -->
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>    
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-site-plugin</artifactId>
+                    <version>3.21.0</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-project-info-reports-plugin</artifactId>
+                    <version>3.9.0</version>
+                </plugin>                
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-enforcer-plugin</artifactId>
+                    <version>3.5.0</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.sonatype.central</groupId>
+                    <artifactId>central-publishing-maven-plugin</artifactId>
+                    <version>0.6.0</version>        
+                </plugin>            
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <version>3.8.1</version>
+                </plugin>           
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-install-plugin</artifactId>
+                    <version>3.1.3</version>
+                </plugin>      
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>3.3.1</version>
+                </plugin>    
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>3.3.1</version>
+                </plugin>    
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>3.5.2</version>
+                    <configuration>
+                        <skipTests>${jjazzlab.surefire.skipTests}</skipTests>
+                        <!-- Required for XStream EnumSetConverter: needs reflective access to java.util.EnumSet private fields -->
+                        <argLine>--add-opens java.base/java.util=ALL-UNNAMED</argLine>
+                    </configuration>
+                </plugin>           
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-help-plugin</artifactId>
+                    <version>3.5.1</version>
+                </plugin>                 
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                    <version>3.1.3</version>
+                </plugin>   
+            </plugins>
+        </pluginManagement>
+
+        <plugins>                       
+        </plugins>
+    </build>
+    
+    
+       
+    <profiles>
+        
+        <profile>
+            <!-- Use mvn -Pprepare-deploy install. Prepare a javadoc jar and a sources jar, gpg signing when needed, for each module, gpg when  -->
+            <id>prepare-deploy</id>            
+            
+            <properties>
+                <jjazzlab.surefire.skipTests>false</jjazzlab.surefire.skipTests>
+            </properties>
+            
+            <build>
+                <plugins>                
+                    
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <executions>     
+                            <execution> 
+                                <id>generate-javadocs</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals> 
+                            </execution>                                                     
+                        </executions>                                                                                     
+                    </plugin>       
+                    
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>                        
+                        <artifactId>maven-source-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>attach-sources</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>jar-no-fork</goal>
+                                </goals> 
+                            </execution>
+                        </executions>
+                    </plugin>
+                    
+                </plugins>
+            </build>
+        </profile>
+        
+    </profiles>          
+    <modules>
+        <module>model/Harmony</module>
+        <module>model/Midi</module>
+        <module>model/Phrase</module>
+        <module>model/Rhythm</module>        
+        <module>model/Song</module>
+        <module>model/SongImpl</module>
+                
+        <module>core/EmbeddedSynth</module> 
+        <module>core/FlatComponents</module> 		              
+        <module>core/Humanizer</module>		
+        <module>core/Importers</module>
+        <module>core/MusicControl</module>
+        <module>core/OutputSynth</module>
+        <module>core/PhraseTransform</module>
+        <module>core/Quantizer</module>
+        <module>core/RhythmDatabase</module>
+        <module>core/RhythmMusicGeneration</module>
+        <module>core/RhythmMusicGenerationSPI</module>
+        <module>core/RhythmParametersImpl</module>
+        <module>core/RhythmStubs</module>
+        <module>core/TestMocks</module>        
+        <module>core/TestPlayerService</module>
+        <module>core/UIUtilities</module>		
+        <module>core/UndoManager</module>		
+        <module>core/Utilities</module>
+        <module>core/Xstream</module>
+        <module>core/Guava</module>	
+        
+        <module>app/application</module>
+        <module>app/branding</module>
+        <module>app/ActiveSong</module>
+        <module>app/Analytics</module>
+        <module>app/Arranger</module>
+        <module>app/Base</module>
+        <module>app/CL_Editor</module>
+        <module>app/CL_EditorImpl</module>        
+        <module>app/ChordInspector</module>
+        <module>app/CoreUIcomponents</module>
+        <module>app/EasyReader</module>
+        <module>app/FileDirectoryManager</module>		
+        <module>app/ImprovisationSupport</module>
+        <module>app/InstrumentChooser</module>
+        <module>app/InstrumentComponents</module>
+        <module>app/MixConsole</module>
+        <module>app/MusicControlActions</module>
+        <module>app/Options</module>
+        <module>app/PianoRoll</module>
+        <module>app/Print</module>        
+        <module>app/RhythmDatabaseImpl</module>        
+        <module>app/RhythmSelectionDialog</module>
+        <module>app/RpCustomEditorFactoryImpl</module>
+        <module>app/SS_Editor</module>
+        <module>app/SS_EditorImpl</module>                
+        <module>app/Score</module>
+        <module>app/SongEditorManager</module>
+        <module>app/SongMemoViewer</module>
+        <module>app/SptEditor</module>
+        <module>app/StartupManager</module>        		
+        <module>app/Test</module>
+        <module>app/UISettings</module>
+        <module>app/Upgrade</module>
+        <module>app/YjzCreationWizard</module>		
+        <module>app/ZoomableSliders</module>
+        
+        <module>plugins/FluidSynthEmbeddedSynth</module>        
+        <module>plugins/JJSwing</module>
+        <module>plugins/YamJJazz</module>
+
+    </modules>    
+    
+</project>

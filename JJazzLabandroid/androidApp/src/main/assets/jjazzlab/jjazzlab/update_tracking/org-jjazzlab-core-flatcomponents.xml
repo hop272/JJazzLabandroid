@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?><module codename="org.jjazzlab.core.flatcomponents">
+    <module_version install_time="1794429370195" last="true" origin="installer" specification_version="5.2.1">
+        <file crc="2393805239" name="config/Modules/org-jjazzlab-core-flatcomponents.xml"/>
+        <file crc="4182298181" name="modules/org-jjazzlab-core-flatcomponents.jar"/>
+    </module_version>
+</module>

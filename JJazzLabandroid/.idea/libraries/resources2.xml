@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="resources2">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/plugins/YamJJazz/src/main/resources/org/jjazz/yamjjazz/rhythm/api/resources/YamJJazzDefaultFiles.zip!/" />
+      <root url="jar://$PROJECT_DIR$/plugins/YamJJazz/src/main/resources/org/jjazz/yamjjazz/rhythm/api/resources/YamahaDefaultFiles.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

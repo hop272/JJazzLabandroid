@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?><module codename="org.jjazzlab.core.rhythmparametersimpl">
+    <module_version install_time="1794429369774" last="true" origin="installer" specification_version="5.2.1">
+        <file crc="2664544883" name="config/Modules/org-jjazzlab-core-rhythmparametersimpl.xml"/>
+        <file crc="1504365303" name="modules/org-jjazzlab-core-rhythmparametersimpl.jar"/>
+    </module_version>
+</module>

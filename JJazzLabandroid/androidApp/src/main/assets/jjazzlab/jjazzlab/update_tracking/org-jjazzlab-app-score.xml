@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?><module codename="org.jjazzlab.app.score">
+    <module_version install_time="1794429369997" last="true" origin="installer" specification_version="5.2.1">
+        <file crc="56158483" name="config/Modules/org-jjazzlab-app-score.xml"/>
+        <file crc="354444854" name="modules/org-jjazzlab-app-score.jar"/>
+    </module_version>
+</module>

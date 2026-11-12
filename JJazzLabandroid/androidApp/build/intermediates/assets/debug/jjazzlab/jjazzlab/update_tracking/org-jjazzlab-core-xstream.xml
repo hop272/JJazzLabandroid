@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?><module codename="org.jjazzlab.core.xstream">
+    <module_version install_time="1794429369931" last="true" origin="installer" specification_version="5.2.1">
+        <file crc="4083919606" name="config/Modules/org-jjazzlab-core-xstream.xml"/>
+        <file crc="3116205248" name="modules/ext/org.jjazzlab.core.xstream/com-thoughtworks-xstream/xstream.jar"/>
+        <file crc="3405387567" name="modules/ext/org.jjazzlab.core.xstream/io-github-x-stream/mxparser.jar"/>
+        <file crc="3900691082" name="modules/ext/org.jjazzlab.core.xstream/xmlpull/xmlpull.jar"/>
+        <file crc="4096597765" name="modules/org-jjazzlab-core-xstream.jar"/>
+    </module_version>
+</module>

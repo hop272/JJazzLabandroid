@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="resources">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/app/Base/src/main/resources/org/jjazz/base/resources/ExampleSongs.zip!/" />
+      <root url="jar://$PROJECT_DIR$/app/Base/src/main/resources/org/jjazz/base/resources/MidiSynthFiles.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
