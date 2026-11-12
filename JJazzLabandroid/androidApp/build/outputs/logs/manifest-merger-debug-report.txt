@@ -1,9 +1,9 @@
 -- Merging decision tree log ---
 manifest
-ADDED from /home/struan/StudioProjects/JJazzLabandroid/androidApp/src/main/AndroidManifest.xml:2:1-25:12
-INJECTED from /home/struan/StudioProjects/JJazzLabandroid/androidApp/src/main/AndroidManifest.xml:2:1-25:12
-INJECTED from /home/struan/StudioProjects/JJazzLabandroid/androidApp/src/main/AndroidManifest.xml:2:1-25:12
-INJECTED from /home/struan/StudioProjects/JJazzLabandroid/androidApp/src/main/AndroidManifest.xml:2:1-25:12
+ADDED from /home/struan/StudioProjects/JJazzLabandroid/androidApp/src/main/AndroidManifest.xml:2:1-26:12
+INJECTED from /home/struan/StudioProjects/JJazzLabandroid/androidApp/src/main/AndroidManifest.xml:2:1-26:12
+INJECTED from /home/struan/StudioProjects/JJazzLabandroid/androidApp/src/main/AndroidManifest.xml:2:1-26:12
+INJECTED from /home/struan/StudioProjects/JJazzLabandroid/androidApp/src/main/AndroidManifest.xml:2:1-26:12
 MERGED from [com.google.android.material:material:1.11.0] /home/struan/.gradle/caches/8.11/transforms/34cdc398aacaed9fc293ca59a5ce6675/transformed/material-1.11.0/AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.constraintlayout:constraintlayout:2.1.4] /home/struan/.gradle/caches/8.11/transforms/812f4bed5cc2a1a2ca341e94837f8f0d/transformed/constraintlayout-2.1.4/AndroidManifest.xml:2:1-11:12
 MERGED from [androidx.appcompat:appcompat-resources:1.6.1] /home/struan/.gradle/caches/8.11/transforms/393c90946e7272b8907bac03f15e2fb6/transformed/jetified-appcompat-resources-1.6.1/AndroidManifest.xml:17:1-22:12
@@ -62,7 +62,7 @@ ADDED from /home/struan/StudioProjects/JJazzLabandroid/androidApp/src/main/Andro
 	android:name
 		ADDED from /home/struan/StudioProjects/JJazzLabandroid/androidApp/src/main/AndroidManifest.xml:5:22-76
 application
-ADDED from /home/struan/StudioProjects/JJazzLabandroid/androidApp/src/main/AndroidManifest.xml:7:5-23:19
+ADDED from /home/struan/StudioProjects/JJazzLabandroid/androidApp/src/main/AndroidManifest.xml:7:5-24:19
 MERGED from [com.google.android.material:material:1.11.0] /home/struan/.gradle/caches/8.11/transforms/34cdc398aacaed9fc293ca59a5ce6675/transformed/material-1.11.0/AndroidManifest.xml:22:5-20
 MERGED from [com.google.android.material:material:1.11.0] /home/struan/.gradle/caches/8.11/transforms/34cdc398aacaed9fc293ca59a5ce6675/transformed/material-1.11.0/AndroidManifest.xml:22:5-20
 MERGED from [androidx.constraintlayout:constraintlayout:2.1.4] /home/struan/.gradle/caches/8.11/transforms/812f4bed5cc2a1a2ca341e94837f8f0d/transformed/constraintlayout-2.1.4/AndroidManifest.xml:9:5-20
@@ -87,30 +87,32 @@ MERGED from [androidx.startup:startup-runtime:1.1.1] /home/struan/.gradle/caches
 		ADDED from /home/struan/StudioProjects/JJazzLabandroid/androidApp/src/main/AndroidManifest.xml:10:9-35
 	android:label
 		ADDED from /home/struan/StudioProjects/JJazzLabandroid/androidApp/src/main/AndroidManifest.xml:9:9-33
+	android:hardwareAccelerated
+		ADDED from /home/struan/StudioProjects/JJazzLabandroid/androidApp/src/main/AndroidManifest.xml:13:9-43
 	android:allowBackup
 		ADDED from /home/struan/StudioProjects/JJazzLabandroid/androidApp/src/main/AndroidManifest.xml:8:9-35
 	android:theme
-		ADDED from /home/struan/StudioProjects/JJazzLabandroid/androidApp/src/main/AndroidManifest.xml:13:9-59
+		ADDED from /home/struan/StudioProjects/JJazzLabandroid/androidApp/src/main/AndroidManifest.xml:14:9-59
 	android:usesCleartextTraffic
 		ADDED from /home/struan/StudioProjects/JJazzLabandroid/androidApp/src/main/AndroidManifest.xml:11:9-44
 activity#org.jjazzlab.android.MainActivity
-ADDED from /home/struan/StudioProjects/JJazzLabandroid/androidApp/src/main/AndroidManifest.xml:14:9-22:20
+ADDED from /home/struan/StudioProjects/JJazzLabandroid/androidApp/src/main/AndroidManifest.xml:15:9-23:20
 	android:exported
-		ADDED from /home/struan/StudioProjects/JJazzLabandroid/androidApp/src/main/AndroidManifest.xml:16:13-36
+		ADDED from /home/struan/StudioProjects/JJazzLabandroid/androidApp/src/main/AndroidManifest.xml:17:13-36
 	android:configChanges
-		ADDED from /home/struan/StudioProjects/JJazzLabandroid/androidApp/src/main/AndroidManifest.xml:17:13-106
+		ADDED from /home/struan/StudioProjects/JJazzLabandroid/androidApp/src/main/AndroidManifest.xml:18:13-106
 	android:name
-		ADDED from /home/struan/StudioProjects/JJazzLabandroid/androidApp/src/main/AndroidManifest.xml:15:13-41
+		ADDED from /home/struan/StudioProjects/JJazzLabandroid/androidApp/src/main/AndroidManifest.xml:16:13-41
 intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
-ADDED from /home/struan/StudioProjects/JJazzLabandroid/androidApp/src/main/AndroidManifest.xml:18:13-21:29
+ADDED from /home/struan/StudioProjects/JJazzLabandroid/androidApp/src/main/AndroidManifest.xml:19:13-22:29
 action#android.intent.action.MAIN
-ADDED from /home/struan/StudioProjects/JJazzLabandroid/androidApp/src/main/AndroidManifest.xml:19:17-69
+ADDED from /home/struan/StudioProjects/JJazzLabandroid/androidApp/src/main/AndroidManifest.xml:20:17-69
 	android:name
-		ADDED from /home/struan/StudioProjects/JJazzLabandroid/androidApp/src/main/AndroidManifest.xml:19:25-66
+		ADDED from /home/struan/StudioProjects/JJazzLabandroid/androidApp/src/main/AndroidManifest.xml:20:25-66
 category#android.intent.category.LAUNCHER
-ADDED from /home/struan/StudioProjects/JJazzLabandroid/androidApp/src/main/AndroidManifest.xml:20:17-77
+ADDED from /home/struan/StudioProjects/JJazzLabandroid/androidApp/src/main/AndroidManifest.xml:21:17-77
 	android:name
-		ADDED from /home/struan/StudioProjects/JJazzLabandroid/androidApp/src/main/AndroidManifest.xml:20:27-74
+		ADDED from /home/struan/StudioProjects/JJazzLabandroid/androidApp/src/main/AndroidManifest.xml:21:27-74
 uses-sdk
 INJECTED from /home/struan/StudioProjects/JJazzLabandroid/androidApp/src/main/AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from /home/struan/StudioProjects/JJazzLabandroid/androidApp/src/main/AndroidManifest.xml

@@ -3,9 +3,12 @@ package org.jjazzlab.android
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.DisplayMetrics
 import android.view.View
 import android.view.WindowManager
+import android.webkit.ConsoleMessage
+import android.webkit.WebChromeClient
+import android.webkit.WebResourceError
+import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Button
@@ -14,8 +17,14 @@ import android.widget.LinearLayout
 import android.widget.ScrollView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import org.apache.commons.compress.archivers.tar.TarArchiveInputStream
+import org.apache.commons.compress.compressors.gzip.GzipCompressorInputStream
+import java.io.BufferedInputStream
 import java.io.File
+import java.io.FileInputStream
+import java.io.FileOutputStream
 import java.net.HttpURLConnection
+import java.net.Socket
 import java.net.URL
 import java.util.concurrent.Executors
 
@@ -23,7 +32,6 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var statusTextView: TextView
     private lateinit var startXButton: Button
-    private lateinit var diagButton: Button
     private lateinit var toggleLogButton: Button
     private lateinit var webView: WebView
     private lateinit var mainContainer: FrameLayout
@@ -55,21 +63,11 @@ class MainActivity : AppCompatActivity() {
 
         startXButton = Button(this).apply {
             layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f).apply { setMargins(4, 4, 4, 4) }
-            text = "Start X Display"
+            text = "Start JJazzLab (Step D)"
             setOnClickListener {
                 startXButton.isEnabled = false
-                appendOutput("Starting Xvnc & noVNC server...\n")
-                executor.execute { startXDisplay() }
-            }
-        }
-
-        diagButton = Button(this).apply {
-            layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f).apply { setMargins(4, 4, 4, 4) }
-            text = "Run X11 Diagnostics"
-            setOnClickListener {
-                diagButton.isEnabled = false
-                appendOutput("Running X11 diagnostics...\n")
-                executor.execute { runX11Diagnostics() }
+                appendOutput("Starting Step (D): Xvnc, noVNC, and JJazzLab...\n")
+                executor.execute { startStepD() }
             }
         }
 
@@ -86,7 +84,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         buttonContainer.addView(startXButton)
-        buttonContainer.addView(diagButton)
         buttonContainer.addView(toggleLogButton)
 
         mainContainer = FrameLayout(this).apply {
@@ -111,7 +108,7 @@ class MainActivity : AppCompatActivity() {
             setTextColor(0xFF00FF00.toInt())
             textSize = 12f
             typeface = android.graphics.Typeface.MONOSPACE
-            text = "Step (c): Virtual X Display in Proot.\nTap 'Start X Display' then 'Run X11 Diagnostics'.\n\n"
+            text = "Step (d): Launching JJazzLab Desktop on X Display.\nTap 'Start JJazzLab (Step D)'.\n\n"
         }
 
         webView = WebView(this).apply {
@@ -120,19 +117,36 @@ class MainActivity : AppCompatActivity() {
                 FrameLayout.LayoutParams.MATCH_PARENT
             )
             visibility = View.GONE
+            clearCache(true)
             settings.apply {
                 javaScriptEnabled = true
                 domStorageEnabled = true
                 databaseEnabled = true
                 allowFileAccess = true
                 allowContentAccess = true
+                cacheMode = android.webkit.WebSettings.LOAD_NO_CACHE
+                mediaPlaybackRequiresUserGesture = false
+                mixedContentMode = android.webkit.WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
                 loadWithOverviewMode = true
                 useWideViewPort = true
                 setSupportZoom(true)
                 builtInZoomControls = true
                 displayZoomControls = false
             }
-            webViewClient = WebViewClient()
+            webViewClient = object : WebViewClient() {
+                override fun onReceivedError(view: WebView?, request: WebResourceRequest?, error: WebResourceError?) {
+                    super.onReceivedError(view, request, error)
+                    appendOutput("\n[WebView Error] ${error?.description} (code ${error?.errorCode})\n")
+                }
+            }
+            webChromeClient = object : WebChromeClient() {
+                override fun onConsoleMessage(consoleMessage: ConsoleMessage?): Boolean {
+                    consoleMessage?.let {
+                        appendOutput("\n[JS Console] ${it.message()}: line ${it.lineNumber()} of ${it.sourceId()}\n")
+                    }
+                    return super.onConsoleMessage(consoleMessage)
+                }
+            }
         }
 
         scrollView.addView(statusTextView)
@@ -150,159 +164,202 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun runX11Diagnostics() {
-        try {
-            val rootfsDir = File(filesDir, "rootfs")
-            val xLog = File(rootfsDir, "root/x.log")
-
-            appendOutput("========================================\n")
-            appendOutput("Check 1: Last 50 lines of /root/x.log:\n")
-            if (xLog.exists()) {
-                appendOutput(xLog.readLines().takeLast(50).joinToString("\n") + "\n")
-            } else {
-                appendOutput("/root/x.log does not exist.\n")
-            }
-
-            appendOutput("\nCheck 1b: VNC log files in /root/.vnc/:\n")
-            val vncDir = File(rootfsDir, "root/.vnc")
-            if (vncDir.exists()) {
-                vncDir.listFiles()?.forEach { f ->
-                    if (f.name.endsWith(".log")) {
-                        appendOutput("--- ${f.name} ---\n")
-                        appendOutput(f.readLines().takeLast(30).joinToString("\n") + "\n")
-                    }
-                }
-            }
-
-            appendOutput("\nCheck 2: Running processes (ps aux):\n")
-            runProotCommand("ps aux | grep -E 'Xvnc|websockify|openbox|xterm'")
-
-            appendOutput("\nCheck 3: Listening ports:\n")
-            runProotCommand("ss -ltnp || netstat -ltnp || lsof -i :5901")
-
-            appendOutput("\nCheck 4: xdpyinfo -display :1:\n")
-            runProotCommand("xdpyinfo -display :1 | head -n 5")
-
-            appendOutput("\nCheck 6: Plain TCP check to port 5901:\n")
-            runProotCommand("bash -c 'timeout 2 bash -c \"cat < /dev/tcp/127.0.0.1/5901\"'")
-
-        } catch (e: Exception) {
-            appendOutput("Diag Error: ${e.message}\n")
-        } finally {
-            handler.post { diagButton.isEnabled = true }
-        }
-    }
-
-    private fun startXDisplay() {
+    private fun startStepD() {
         try {
             val rootfsDir = File(filesDir, "rootfs")
             val rootDir = File(rootfsDir, "root").apply { mkdirs() }
-            val vncHtml = File(rootfsDir, "usr/share/novnc/vnc.html")
+            val novncDir = File(rootfsDir, "opt/novnc")
+            val vncHtml = File(novncDir, "vnc.html")
 
             if (!vncHtml.exists()) {
-                appendOutput("Installing X11 packages first via apt-get...\n")
-                val aptCmd = "DEBIAN_FRONTEND=noninteractive apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends tigervnc-standalone-server novnc websockify openbox xterm x11-utils x11-xserver-utils fonts-dejavu fonts-liberation dbus-x11 procps net-tools"
-                runProotCommand(aptCmd)
+                appendOutput("Setting up rootfs packages & noVNC...\n")
+                val prepCmd = "DEBIAN_FRONTEND=noninteractive apt-get remove -y --purge novnc || true; " +
+                              "rm -rf /opt/novnc /usr/share/novnc; " +
+                              "DEBIAN_FRONTEND=noninteractive apt-get update && " +
+                              "DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends tigervnc-standalone-server python3-websockify python3-numpy openbox xterm x11-utils x11-xserver-utils fonts-dejavu fonts-liberation dbus-x11 wget ca-certificates openjdk-21-jdk"
+                runProotCommand(prepCmd)
+
+                val tarFile = File(cacheDir, "noVNC-1.4.0.tar.gz")
+                if (!tarFile.exists()) {
+                    val url = URL("https://github.com/novnc/noVNC/archive/refs/tags/v1.4.0.tar.gz")
+                    url.openStream().use { input ->
+                        FileOutputStream(tarFile).use { output ->
+                            input.copyTo(output)
+                        }
+                    }
+                }
+                val rootfsOpt = File(rootfsDir, "opt").apply { mkdirs() }
+                extractTarGzToOpt(tarFile, rootfsOpt)
             }
 
-            val metrics = DisplayMetrics()
-            windowManager.defaultDisplay.getMetrics(metrics)
-            val w = if (metrics.widthPixels > 0) metrics.widthPixels else 1280
-            val h = if (metrics.heightPixels > 0) metrics.heightPixels else 800
+            val optJjazzlab = File(rootfsDir, "opt/jjazzlab")
+            if (!optJjazzlab.exists()) {
+                appendOutput("Extracting JJazzLab cluster from assets to /opt/jjazzlab...\n")
+                optJjazzlab.mkdirs()
+                copyAssetFolder("jjazzlab", optJjazzlab)
+                appendOutput("JJazzLab cluster extraction complete.\n")
+            }
 
             val scriptFile = File(rootDir, "start-x.sh")
             scriptFile.writeText(
                 """
                 #!/bin/bash
                 export XDG_RUNTIME_DIR=/tmp/runtime-root
-                mkdir -p /tmp/runtime-root /tmp/.X11-unix /root/.vnc
+                mkdir -p /tmp/runtime-root /tmp/.X11-unix /root/.vnc /opt
                 chmod 1777 /tmp/.X11-unix /tmp/runtime-root
                 rm -f /tmp/.X11-unix/X1 /tmp/.X1-lock
 
-                exec > /root/x.log 2>&1
+                pkill -f websockify || true
+                pkill -f Xvnc || true
 
-                echo "Starting Xvnc on :1 (${w}x${h})..."
-                Xvnc :1 -geometry ${w}x${h} -depth 24 -SecurityTypes None -AlwaysShared -noreset &
+                echo "Starting Xvnc at 1280x800 depth 24..." > /root/x.log
+
+                (
+                    while true; do
+                        Xvnc :1 -geometry 1280x800 -depth 24 -SecurityTypes None -AlwaysShared -rfbport 5901 >> /root/xvnc.log 2>&1
+                        echo "Xvnc exited with ${'$'}?" >> /root/x.log
+                        sleep 2
+                    done
+                ) &
 
                 export DISPLAY=:1
 
-                echo "Starting websockify on 6080..."
-                websockify --web /usr/share/novnc 6080 127.0.0.1:5901 &
+                (
+                    while true; do
+                        websockify --verbose --web /opt/novnc 6080 127.0.0.1:5901 >> /root/websockify.log 2>&1
+                        echo "websockify exited with ${'$'}?" >> /root/x.log
+                        sleep 2
+                    done
+                ) &
 
-                echo "Waiting for xdpyinfo..."
-                for i in $(seq 1 30); do
-                    if xdpyinfo -display :1 >/dev/null 2>&1; then
-                        echo "Xvnc ready on :1"
-                        break
-                    fi
-                    sleep 1
-                done
-
-                echo "Starting openbox..."
+                echo "Starting openbox..." >> /root/x.log
                 openbox &
+                sleep 2
 
-                echo "Starting xterm..."
-                xterm -geometry 100x30 &
+                echo "Starting JJazzLab desktop app..." >> /root/x.log
+                chmod +x /opt/jjazzlab/bin/jjazzlab
+                export PATH=${'$'}PATH:/usr/lib/jvm/java-21-openjdk-amd64/bin
+                /opt/jjazzlab/bin/jjazzlab --jdkhome /usr/lib/jvm/java-21-openjdk-amd64 >> /root/jjazzlab.log 2>&1 &
 
-                echo "X11 stack fully initialized."
+                exec tail -f /dev/null
                 """.trimIndent() + "\n"
             )
 
-            appendOutput("Wrote /root/start-x.sh (${w}x${h}). Launching background proot process...\n")
+            appendOutput("Wrote /root/start-x.sh. Launching background proot daemon...\n")
 
             if (xProcess == null) {
-                val startCmd = "chmod +x /root/start-x.sh && /root/start-x.sh"
+                val startCmd = "chmod +x /root/start-x.sh && /root/start-x.sh >/root/x.log 2>&1 </dev/null"
                 startProotBackgroundProcess(startCmd)
             }
 
-            appendOutput("Polling http://127.0.0.1:6080/vnc.html (up to 60s)...\n")
+            appendOutput("Waiting until http://127.0.0.1:6080/vnc.html returns 200 AND socket 5901 returns RFB...\n")
             var ready = false
             for (i in 1..60) {
                 Thread.sleep(1000)
-                try {
-                    val conn = URL("http://127.0.0.1:6080/vnc.html").openConnection() as HttpURLConnection
-                    conn.connectTimeout = 1000
-                    conn.readTimeout = 1000
-                    val code = conn.responseCode
-                    if (code == 200) {
-                        appendOutput("noVNC web server READY (HTTP 200) on attempt $i!\n")
-                        ready = true
-                        break
-                    }
-                } catch (_: Exception) {}
+                val httpOk = checkHttp200("http://127.0.0.1:6080/vnc.html")
+                val rfbOk = checkRfb("127.0.0.1", 5901)
+                if (httpOk && rfbOk) {
+                    appendOutput("READY on attempt $i! HTTP 200 + RFB banner verified.\n")
+                    ready = true
+                    break
+                }
             }
 
             if (ready) {
                 handler.post {
                     webView.visibility = View.VISIBLE
-                    webView.loadUrl("http://127.0.0.1:6080/vnc_lite.html?host=127.0.0.1&port=6080&autoconnect=true&encrypt=false")
-                    appendOutput("\nSwitched screen to full-screen WebView X display (vnc_lite.html)!\n")
+                    val targetUrl = "http://127.0.0.1:6080/vnc.html?autoconnect=true&resize=scale&reconnect=true&path=websockify&v=${System.currentTimeMillis()}"
+                    webView.loadUrl(targetUrl)
+                    appendOutput("\nLoaded JJazzLab noVNC URL in WebView:\n$targetUrl\n")
                 }
             } else {
-                appendOutput("noVNC server poll timed out. Checking /root/x.log...\n")
-                checkXLog()
+                appendOutput("Timeout waiting for HTTP 200 + RFB banner.\n")
             }
 
         } catch (e: Exception) {
-            appendOutput("Start X Error: ${e.message}\n")
-            checkXLog()
+            appendOutput("Start Step D Error: ${e.message}\n")
         } finally {
             handler.post { startXButton.isEnabled = true }
         }
     }
 
-    private fun checkXLog() {
-        try {
-            val logFile = File(filesDir, "rootfs/root/x.log")
-            if (logFile.exists()) {
-                val lines = logFile.readLines().takeLast(30)
-                appendOutput("\n--- Last 30 lines of /root/x.log ---\n")
-                lines.forEach { appendOutput("$it\n") }
+    private fun copyAssetFolder(assetFolder: String, outputDir: File) {
+        val assetManager = assets
+        val files = assetManager.list(assetFolder) ?: return
+        for (filename in files) {
+            val assetPath = "$assetFolder/$filename"
+            val outFile = File(outputDir, filename)
+            val subFiles = assetManager.list(assetPath)
+            if (subFiles != null && subFiles.isNotEmpty()) {
+                outFile.mkdirs()
+                copyAssetFolder(assetPath, outFile)
             } else {
-                appendOutput("\n/root/x.log does not exist yet.\n")
+                assetManager.open(assetPath).use { input ->
+                    FileOutputStream(outFile).use { output ->
+                        input.copyTo(output)
+                    }
+                }
+                if (filename.startsWith("jjazzlab") || filename.endsWith(".sh") || outFile.absolutePath.contains("/bin/")) {
+                    outFile.setExecutable(true, false)
+                }
             }
-        } catch (e: Exception) {
-            appendOutput("Failed to read /root/x.log: ${e.message}\n")
+        }
+    }
+
+    private fun checkHttp200(urlString: String): Boolean {
+        return try {
+            val conn = URL(urlString).openConnection() as HttpURLConnection
+            conn.connectTimeout = 1000
+            conn.readTimeout = 1000
+            conn.responseCode == 200
+        } catch (_: Exception) {
+            false
+        }
+    }
+
+    private fun checkRfb(host: String, port: Int): Boolean {
+        return try {
+            Socket(host, port).use { socket ->
+                socket.soTimeout = 2000
+                val buf = ByteArray(12)
+                val read = socket.getInputStream().read(buf)
+                if (read >= 4) {
+                    val banner = String(buf, 0, read)
+                    banner.startsWith("RFB ")
+                } else {
+                    false
+                }
+            }
+        } catch (_: Exception) {
+            false
+        }
+    }
+
+    private fun extractTarGzToOpt(tarGzFile: File, optDir: File) {
+        FileInputStream(tarGzFile).use { fis ->
+            BufferedInputStream(fis).use { bis ->
+                GzipCompressorInputStream(bis).use { gzis ->
+                    TarArchiveInputStream(gzis).use { tais ->
+                        var entry = tais.nextTarEntry
+                        while (entry != null) {
+                            val name = entry.name.replaceFirst(Regex("^[^/]+/"), "")
+                            if (name.isNotEmpty()) {
+                                val newFile = File(optDir, "novnc/$name")
+                                if (entry.isDirectory) {
+                                    newFile.mkdirs()
+                                } else {
+                                    newFile.parentFile?.mkdirs()
+                                    FileOutputStream(newFile).use { fos ->
+                                        tais.copyTo(fos)
+                                    }
+                                    newFile.setExecutable((entry.mode and 64) != 0, false)
+                                }
+                            }
+                            entry = tais.nextTarEntry
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -315,7 +372,6 @@ class MainActivity : AppCompatActivity() {
 
         val command = listOf(
             prootBinary.absolutePath,
-            "--kill-on-exit",
             "--link2symlink",
             "--sysvipc",
             "-0",
@@ -341,17 +397,6 @@ class MainActivity : AppCompatActivity() {
         pb.redirectErrorStream(true)
 
         xProcess = pb.start()
-        Executors.newSingleThreadExecutor().execute {
-            try {
-                xProcess?.inputStream?.bufferedReader()?.use { reader ->
-                    var line = reader.readLine()
-                    while (line != null) {
-                        appendOutput("[x11] $line\n")
-                        line = reader.readLine()
-                    }
-                }
-            } catch (_: Exception) {}
-        }
     }
 
     private fun runProotCommand(scriptText: String): Int {
@@ -363,7 +408,6 @@ class MainActivity : AppCompatActivity() {
 
         val command = listOf(
             prootBinary.absolutePath,
-            "--kill-on-exit",
             "--link2symlink",
             "--sysvipc",
             "-0",

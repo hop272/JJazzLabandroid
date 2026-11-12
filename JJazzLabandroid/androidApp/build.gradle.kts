@@ -47,3 +47,13 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("org.apache.commons:commons-compress:1.26.0")
 }
+
+tasks.register("copyJJazzLabToAssets", Copy::class) {
+    from("../app/application/target/jjazzlab")
+    into("src/main/assets/jjazzlab")
+}
+
+tasks.named("preBuild").configure {
+    dependsOn("copyJJazzLabToAssets")
+}
+
